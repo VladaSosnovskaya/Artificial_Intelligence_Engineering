@@ -1,0 +1,38 @@
+{
+    "S07-hw-dataset-01": {
+        "k_means": {
+            "silhouette": 0.5216395622404242,
+            "davies_bouldin": 0.6853295219054457,
+            "calinski_harabasz": 11786.954622671532
+        },
+        "dbscan": {
+            "silhouette": 0.10610195201260433,
+            "davies_bouldin": 0.911447001375174,
+            "calinski_harabasz": 615.9570791030344
+        }
+    },
+    "S07-hw-dataset-02": {
+        "k_means": {
+            "silhouette": 0.3068610017701601,
+            "davies_bouldin": 1.3234721699867644,
+            "calinski_harabasz": 3573.3933329348392
+        },
+        "dbscan": {
+            "silhouette": 0.18359973773403948,
+            "davies_bouldin": 1.202438354859082,
+            "calinski_harabasz": 1441.8434357287547
+        }
+    },
+    "S07-hw-dataset-03": {
+        "k_means": {
+            "silhouette": 0.3155447003782518,
+            "davies_bouldin": 1.1577256320598661,
+            "calinski_harabasz": 6957.162639510167
+        },
+        "dbscan": {
+            "silhouette": 0.130228957269187,
+            "davies_bouldin": 1.138778431050121,
+            "calinski_harabasz": 2115.4340249312745
+        }
+    }
+}

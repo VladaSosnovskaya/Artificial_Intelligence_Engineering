@@ -1,0 +1,38 @@
+{
+    "S07-hw-dataset-01": {
+        "k_means": {
+            "k": 2,
+            "criterion": "Better silhouette"
+        },
+        "dbscan": {
+            "eps": 0.3,
+            "min_samples": 12,
+            "noise_share": 0.66925,
+            "criterion": "Best silhouette + one of the best clustering visually, moderate noise level"
+        }
+    },
+    "S07-hw-dataset-02": {
+        "k_means": {
+            "k": 2,
+            "criterion": "Better silhouette"
+        },
+        "dbscan": {
+            "eps": 0.25,
+            "min_samples": 12,
+            "noise_share": 0.089875,
+            "criterion": "High silhouette + good visual clustering (2 clear arcs), moderate noise"
+        }
+    },
+    "S07-hw-dataset-03": {
+        "k_means": {
+            "k": 3,
+            "criterion": "Better silhouette"
+        },
+        "dbscan": {
+            "eps": 0.3,
+            "min_samples": 12,
+            "noise_share": 0.24813333333333334,
+            "criterion": "Better silhouette + good clustering visually, moderate noise"
+        }
+    }
+}
