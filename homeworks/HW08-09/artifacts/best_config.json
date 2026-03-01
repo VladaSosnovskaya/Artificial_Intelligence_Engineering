@@ -1,0 +1,32 @@
+{
+  "experiment_id": "E4",
+  "dataset": "KMNIST",
+  "seed": 42,
+  "model": {
+    "architecture": "MLP",
+    "input_size": 3072,
+    "hidden_layers": [
+      256,
+      128
+    ],
+    "activation": "ReLU",
+    "dropout_p": 0,
+    "use_batchnorm": true,
+    "num_classes": 10
+  },
+  "optimizer": {
+    "type": "Adam",
+    "lr": 0.001
+  },
+  "training": {
+    "criterion": "CrossEntropyLoss",
+    "batch_size": 64,
+    "max_epochs": 30,
+    "early_stopping": true
+  },
+  "results": {
+    "best_test_accuracy": 0.5434912420382165,
+    "best_test_loss": 1.3871094383251894,
+    "epochs_trained": 17
+  }
+}

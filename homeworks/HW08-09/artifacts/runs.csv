@@ -1,0 +1,8 @@
+experiment_id,dataset,seed,model_summary,optimizer,lr,momentum,weight_decay,epochs_trained,best_val_accuracy,best_val_loss
+E1,CIFAR10,42,"hidden sizes (256,128), activation ReLU, dropout_p=0.0, batchnorm = False",Adam,0.001,0,0,20,0.5183,1.3900
+E2,CIFAR10,42,"hidden sizes (256,128), activation ReLU, dropout_p=0.3, batchnorm = False",Adam,0.001,0,0,20,0.5332,1.3365
+E3,CIFAR10,42,"hidden sizes (256,128), activation ReLU, dropout_p=0.0, batchnorm = True",Adam,0.001,0,0,20,0.5378,1.3079
+E4,CIFAR10,42,"hidden sizes (256,128), activation ReLU, dropout_p=0, batchnorm = True",Adam,0.001,0,0,17,0.5422,1.3195
+O1,CIFAR10,42,"hidden sizes (256,128), activation ReLU, dropout_p=0, batchnorm = True",adam,0.1,0,0,8,0.4787,1.4539
+O2,CIFAR10,42,"hidden sizes (256,128), activation ReLU, dropout_p=0, batchnorm = True",adam,1e-06,0,0,8,0.3764,1.8599
+O3,CIFAR10,42,"hidden sizes (256,128), activation ReLU, dropout_p=0, batchnorm = True",sgd,0.001,0.9,0.0001,10,0.5294,1.3371
