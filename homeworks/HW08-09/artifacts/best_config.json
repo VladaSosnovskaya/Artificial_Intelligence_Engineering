@@ -1,6 +1,6 @@
 {
   "experiment_id": "E4",
-  "dataset": "KMNIST",
+  "dataset": "CIFAR10",
   "seed": 42,
   "model": {
     "architecture": "MLP",
