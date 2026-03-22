@@ -1,0 +1,26 @@
+{
+  "experiment_id": "C4",
+  "dataset": "CIFAR100",
+  "seed": 42,
+  "model": {
+    "architecture": "ResNet18(pretrained) + FC(finetune layer4+fc)",
+    "input_size": 3072,
+    "activation": "ReLU",
+    "num_classes": 100
+  },
+  "optimizer": {
+    "type": "Adam",
+    "lr": 0.001
+  },
+  "training": {
+    "criterion": "CrossEntropyLoss",
+    "batch_size": 64,
+    "max_epochs": 5,
+    "early_stopping": false
+  },
+  "results": {
+    "best_test_accuracy": 0.3894,
+    "best_test_loss": 3.8814249336242677,
+    "epochs_trained": 5
+  }
+}
