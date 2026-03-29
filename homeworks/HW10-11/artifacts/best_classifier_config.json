@@ -1,9 +1,12 @@
 {
-  "experiment_id": "C4",
+  "experiment_id": "C2",
   "dataset": "CIFAR100",
   "seed": 42,
+  "transforms": "ToTensor(), Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))",
+  "preprocess": "transforms() + augmentations для train и val",
+  "augmentation": "RandomHorizontalFlip(p=0.5), RandomRotation(10), RandomCrop(32)",
   "model": {
-    "architecture": "ResNet18(pretrained) + FC(finetune layer4+fc)",
+    "architecture": "CNN (xConv(32-64-128) + 3xMaxPool + FC(2048-256-100))",
     "input_size": 3072,
     "activation": "ReLU",
     "num_classes": 100
@@ -19,8 +22,8 @@
     "early_stopping": false
   },
   "results": {
-    "best_test_accuracy": 0.3894,
-    "best_test_loss": 3.8814249336242677,
+    "best_test_accuracy": 0.3826,
+    "best_test_loss": 3.7864691287994385,
     "epochs_trained": 5
   }
 }

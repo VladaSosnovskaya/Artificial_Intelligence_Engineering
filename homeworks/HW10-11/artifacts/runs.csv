@@ -1,7 +1,7 @@
 experiment_id,task,dataset,seed,model_summary,optimizer,lr,epochs_trained,best_val_accuracy,test_accuracy,precision,recall,mean_iou,notes
 C1,classification,CIFAR100,42,3xConv(32-64-128) + 3xMaxPool + FC(2048-256-100),Adam,0.001,5,0.3663,,,,,
-C2,classification,CIFAR100,42,3xConv(32-64-128) + 3xMaxPool + FC(2048-256-100),Adam,0.001,5,0.6339,,,,,
-C3,classification,CIFAR100,42,"ResNet18(pretrained) + FC(head-only, frozen backbone)",Adam,0.001,5,0.3196,,,,,
-C4,classification,CIFAR100,42,ResNet18(pretrained) + FC(finetune layer4+fc),Adam,0.001,5,0.7747,0.3894,,,,
+C2,classification,CIFAR100,42,3xConv(32-64-128) + 3xMaxPool + FC(2048-256-100),Adam,0.001,5,0.7660,0.3826,,,,
+C3,classification,CIFAR100,42,"ResNet18(pretrained) + FC(head-only, frozen backbone)",Adam,0.001,5,0.2249,,,,,
+C4,classification,CIFAR100,42,ResNet18(pretrained) + FC(finetune layer4+fc),Adam,0.001,5,0.4489,,,,
 V1,detection,Pascal VOC 2012,42,"FasterRCNN_ResNet50_FPN_V2 (pretrained) + default weights, score_thresh=0.3",,,,,,0.29411764705882354,0.963302752293578,0.8627061,
 V2,detection,Pascal VOC 2012,42,"FasterRCNN_ResNet50_FPN_V2 (pretrained) + default weights, score_thresh=0.7",,,,,,0.5689655172413793,0.908256880733945,0.87313867,
