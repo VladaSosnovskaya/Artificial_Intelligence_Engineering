@@ -1,5 +1,5 @@
 experiment_id,task,dataset,seed,split_summary,window_size,horizon,model_summary,features_summary,scaler,optimizer,lr,epochs_trained,best_val_mae,best_val_rmse,best_val_mape,test_mae,test_rmse,test_mape,notes
-B1,forecasting,S12-hw-dataset.csv,42,70/15/15,1,1,naive-last (y_t = y_{t-1}),target(t-1),none,none,,0,6,8,4,,,,
-B2,forecasting,S12-hw-dataset.csv,42,70/15/15,7,1,moving-average (window=7),rolling_mean_7,none,none,,0,10,12,6,,,,
-B3,forecasting,S12-hw-dataset.csv,42,70/15/15,14,1,Ridge(alpha=1.0),"lag_1, lag_7, lag_14, rolling_mean_7, rolling_std_7, day_of_week",none,,,1,6,8,4,,,,
-R1,forecasting,S12-hw-dataset.csv,42,temporal 70/15/15,28,1,"GRU(hidden_size=64, num_layers=1)",raw target sequence,StandardScaler (на train),Adam,0.001,30,5,7,3,6,8,4,
+B1,forecasting,S12-hw-dataset.csv,42,temporal:train[0:70%],val[70:85%],test[85:100%],1,1,naive-last (y_t = y_{t-1}),target(t-1),none,none,,0,6,8,4,,,,
+B2,forecasting,S12-hw-dataset.csv,42,temporal:train[0:70%],val[70:85%],test[85:100%],7,1,moving-average (window=7),rolling_mean_7,none,none,,0,10,12,6,,,,
+B3,forecasting,S12-hw-dataset.csv,42,temporal:train[0:70%],val[70:85%],test[85:100%],14,1,Ridge(alpha=1.0),"lag_1, lag_7, lag_14, rolling_mean_7, rolling_std_7, day_of_week",none,,,1,6,8,4,,,,
+R1,forecasting,S12-hw-dataset.csv,42,temporal:train[0:70%],val[70:85%],test[85:100%],28,1,"GRU(hidden_size=64, num_layers=1)",raw target sequence,StandardScaler (на train),Adam,0.001,30,5,7,3,6,8,4,
