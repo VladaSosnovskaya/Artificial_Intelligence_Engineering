@@ -1,0 +1,6 @@
+query,before_retrieved_sources,after_retrieved_sources,changed
+Что такое Python?,"[np.int64(3), np.int64(1), np.int64(0)]","[np.int64(3), np.int64(1), np.int64(0)]",False
+Что такое список?,"[np.int64(1), np.int64(4), np.int64(8)]","[np.int64(1), np.int64(4), np.int64(11)]",True
+Для чего нужен NumPy?,"[np.int64(6), np.int64(3), np.int64(1)]","[np.int64(6), np.int64(3), np.int64(1)]",False
+Для чего используется pandas?,"[np.int64(5), np.int64(1), np.int64(4)]","[np.int64(5), np.int64(1), np.int64(4)]",False
+Как объявить функцию?,"[np.int64(7), np.int64(2), np.int64(3)]","[np.int64(7), np.int64(2), np.int64(3)]",False
