@@ -1,0 +1,3 @@
+model_name: "CNN_Baseline_checkpoint.pth"
+image_size: 42
+confidence_threshold: 0.6

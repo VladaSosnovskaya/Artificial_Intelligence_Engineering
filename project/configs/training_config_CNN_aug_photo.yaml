@@ -1,0 +1,8 @@
+experiment_name: cnn_variants
+model_name: CNN_photo
+epochs: 2
+lr: 0.001
+wd: 0.0001
+patience: 5
+batch_size: 64
+augmentation: photo

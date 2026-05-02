@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Emotion Classifier</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
+    .section { margin-bottom: 24px; padding: 16px; border: 1px solid #ddd; border-radius: 8px; }
+    input[type="file"] { margin: 12px 0; }
+    #preview { max-width: 100%; max-height: 200px; display: none; margin: 12px 0; border-radius: 4px; }
+    button { padding: 8px 16px; margin-right: 8px; cursor: pointer; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .result { margin-top: 12px; padding: 12px; background: #f0f0f0; border-radius: 4px; }
+    .error { color: #c00; background: #fee; }
+    .ok { color: #080; }
+    .metric-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+    .metric-row:last-child { border-bottom: none; }
+    .metric-row strong { font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Классификатор эмоций</h1>
+
+  <!-- Загрузка и предсказание -->
+  <div class="section">
+    <h3>Изображение</h3>
+    <input type="file" id="fileInput" accept="image/*">
+    <img id="preview" alt="Preview">
+    <br>
+    <button id="classifyBtn" disabled>Классифицировать</button>
+    <div id="result" class="result" style="display:none"></div>
+  </div>
+
+  <!-- Статус и метрики -->
+  <div class="section">
+    <h3>🔧 Сервис</h3>
+    <button id="healthBtn">Статус</button>
+    <button id="metricsBtn">Метрики</button>
+    <div id="statusResult" style="margin-top:8px"></div>
+  </div>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const fileInput = $('fileInput'), preview = $('preview');
+    const classifyBtn = $('classifyBtn'), result = $('result');
+    const healthBtn = $('healthBtn'), metricsBtn = $('metricsBtn'), statusResult = $('statusResult');
+    let file = null;
+
+    // Выбор файла
+    fileInput.onchange = () => {
+      file = fileInput.files[0];
+      if (file?.type.startsWith('image/')) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+        classifyBtn.disabled = false;
+        result.style.display = 'none';
+      }
+    };
+
+    // Предсказание
+    classifyBtn.onclick = async () => {
+      if (!file) return;
+      classifyBtn.disabled = true;
+      classifyBtn.textContent = 'Предсказание...';
+      result.style.display = 'block';
+      result.className = 'result';
+      result.textContent = 'Обработка...';
+
+      const fd = new FormData(); fd.append('file', file);
+      try {
+        const r = await fetch('/predict', { method: 'POST', body: fd });
+        const d = await r.json();
+        if (d.status === 'success') {
+          result.innerHTML = `<b>${d.data.emotion}</b> (${(d.data.confidence*100).toFixed(1)}%)`;
+          result.classList.add('ok');
+        } else { result.textContent = (d.detail || 'Ошибка'); result.classList.add('error'); }
+      } catch(e) { result.textContent = e.message; result.classList.add('error'); }
+      finally { classifyBtn.disabled = false; classifyBtn.textContent = 'Классифицировать'; }
+    };
+
+    // Статус
+    healthBtn.onclick = async () => {
+      try {
+        const d = await (await fetch('/health')).json();
+        statusResult.innerHTML = d.status === 'healthy' 
+          ? `<span class="ok">Модель загружена (${d.device})</span>` 
+          : `<span class="error">${d.message}</span>`;
+      } catch(e) { statusResult.innerHTML = `<span class="error">${e.message}</span>`; }
+    };
+
+    // === Метрики (детальная таблица) ===
+    metricsBtn.onclick = async () => {
+      metricsBtn.disabled = true;
+      statusResult.innerHTML = 'Загрузка...';
+      
+      try {
+        const response = await fetch('/metrics');
+        const data = await response.json();
+        
+        let html = '';
+        for (const [path, count] of Object.entries(data.request_counts || {})) {
+          if (!path.endsWith('_latency')) {
+            const latency = data.request_counts[`${path}_latency`] || 0;
+            const avg = count > 0 ? (latency / count * 1000).toFixed(1) : 0;
+            html += `<div class="metric-row"><span>${path}</span><span>Запросов: ${count}, ~${avg}мс</span></div>`;
+          }
+        }
+        html += `<div class="metric-row"><strong>Средняя задержка</strong><strong>${data.avg_latency_ms}мс</strong></div>`;
+        
+        statusResult.innerHTML = html || '<em>Нет данных</em>';
+      } catch (err) {
+        statusResult.innerHTML = `<span class="error">Ошибка: ${err.message}</span>`;
+      } finally {
+        metricsBtn.disabled = false;
+      }
+    };
+  </script>
+</body>
+</html>

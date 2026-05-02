@@ -1,0 +1,23 @@
+FROM nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04
+
+RUN apt-get update && apt-get install -y --no-install-recommends\
+    python3.10 \
+    python3-pip \
+    libgl1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# libglib2.0-0 - базовая C-библиотека, от неё зависят многие Python-пакеты
+# если будет cv2, добавить libgl1 
+
+WORKDIR /app
+
+RUN python3.10 -m pip install --upgrade pip && python3.10 -m pip install --no-cache-dir torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+
+COPY requirements.txt .
+RUN python3.10 -m pip install --no-cache-dir --default-timeout=100 --retries=5 -r requirements.txt
+
+COPY . .
+RUN mkdir -p tmp
+
+EXPOSE 8050
+CMD ["uvicorn", "src.service.api:app", "--host", "0.0.0.0", "--port", "8000"]

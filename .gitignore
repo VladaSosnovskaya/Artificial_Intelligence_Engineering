@@ -13,8 +13,8 @@ Thumbs.db
 *.swo
 
 # Виртуальные окружения Python
-.venv/
-venv/
+*.venv/
+*venv/
 env/
 ENV/
 .conda/
@@ -58,4 +58,7 @@ logs/
 homeworks/HW08-09/data
 homeworks/HW10-11/data
 homeworks/HW13/results
+mlruns
+project/data/FER-dataset
+project/artifacts/checkpoints/RandomForest_baseline.pkl
 
