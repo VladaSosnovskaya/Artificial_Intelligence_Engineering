@@ -1,0 +1,4 @@
+experiment_name: baselines
+model_name: LogisticRegression
+scaler: StandardScaler
+augmentation: None

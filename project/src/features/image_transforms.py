@@ -1,7 +1,7 @@
 from torchvision import transforms
 
-_MEAN = [0.485]
-_STD  = [0.229]
+_MEAN = [0.508]
+_STD  = [0.212]
 
 def get_train_transform(strategy = "base"):
     base = [transforms.ToTensor(), transforms.Normalize(_MEAN, _STD)]

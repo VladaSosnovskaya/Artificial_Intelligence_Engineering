@@ -31,7 +31,7 @@ class EmotionImageDataset(Dataset):
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, int]:
         img_path, label = self.samples[idx]
         
-        image = Image.open(img_path).convert("L")
+        image = Image.open(img_path).convert("L")       
         image = image.resize((self.image_size, self.image_size), Image.Resampling.LANCZOS)
         
         if self.transform:

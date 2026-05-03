@@ -1,0 +1,4 @@
+experiment_name: baselines
+model_name: RandomForest
+scaler: StandardScaler
+augmentation: None

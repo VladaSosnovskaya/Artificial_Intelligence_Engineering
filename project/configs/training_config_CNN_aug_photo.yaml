@@ -1,6 +1,6 @@
 experiment_name: cnn_variants
-model_name: CNN_photo
-epochs: 2
+model_name: CNN_aug_photo
+epochs: 27
 lr: 0.001
 wd: 0.0001
 patience: 5

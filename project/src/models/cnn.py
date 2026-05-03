@@ -47,7 +47,8 @@ class EmotionCNN(nn.Module):
         return self.classifier(x)
 
 
-def train_cnn(train_loader, val_loader, epochs=30, lr=1e-3, name="cnn", weight_decay=1e-4, patience=8, device="cpu"):
+def train_cnn(train_loader, val_loader, epochs=30, lr=1e-3, name="cnn", weight_decay=1e-4, patience=8):
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     model = EmotionCNN().to(device)
     optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
@@ -55,7 +56,7 @@ def train_cnn(train_loader, val_loader, epochs=30, lr=1e-3, name="cnn", weight_d
     
     best_f1, patience_cnt, history = 0, 0, {"train_loss": [], "val_acc": [], "val_f1": []}
 
-    print(f"Начало эксперимента {name}. Число эпох = {epochs}")
+    print(f"Начало эксперимента {name}. Число эпох = {epochs}. Устройство: {device}")
     
     for epoch in range(epochs):
         model.train()
@@ -100,7 +101,7 @@ def train_cnn(train_loader, val_loader, epochs=30, lr=1e-3, name="cnn", weight_d
 def eval_cnn(model, test_loader):
     model.eval()
     y_true, y_pred = [], []
-    device = next(model.parameters()).device
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     with torch.no_grad():
         for xb, yb in test_loader:
             xb = xb.to(device)

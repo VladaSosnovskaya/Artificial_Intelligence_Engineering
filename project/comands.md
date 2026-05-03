@@ -5,22 +5,19 @@ sudo apt install python3-venv
 python3 -m venv project_venv
 source project_venv/bin/activate
 
-pip install --no-cache-dir torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+pip install --no-cache-dir torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cpu
 ИЛИ
-pip install --no-cache-dir torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+pip install --no-cache-dir torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
 
 pip install -r requirements.txt
-pip install ipykernel
 
-Скачать датасет
-python -m src.data.load_dataset
-
-Запуск тестов (проверка датасета - загрузки, форматов тензоров, наличия классов) 
-PYTHONPATH=. python -m pytest tests/test_data -v
-Ожидание: 3 passed в консоли
 
 pip install -e .
 Устанавливает проект в режиме разработки (чтобы можно было делать import src)
+
+Скачать датасет
+python -m src.data.load_dataset
+python -m src.data.prepare_dataset
 
 Все файлы из notebooks - Это типа "эксперименты", которые мы проводим - выбираем лучшую стратегию обучения (лучшие модели, аугментации). При этом все результаты также записываются в mlflow (должна быть одна функция, куда передаются название эксперимента, оригиналы и предсказания модели, и гиперпараметры обучения). Для обучения используются тренировочный и валидационных наборы данных, для финального теста только тестовый
 1) exp01_eda - первичный анализ данных - ничего не сохраняется
@@ -64,4 +61,8 @@ curl -s http://localhost:8000/metrics
 
 Запустить все тесты
 pytest tests/ -v
+Ожидание: 8 passed в консоли
+
+Докер
+docker compose up -d --build
 
