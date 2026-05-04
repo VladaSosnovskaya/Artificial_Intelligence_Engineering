@@ -27,7 +27,7 @@ python -m src.data.prepare_dataset
 5) exp05_metrics - считываются метрики из metric.csv, выбирается лучший подход, график сохраняется
 
 Запуск mlflow:
-mlflow ui --backend-store-uri file://$(pwd)/artifacts/mlruns --host 0.0.0.0 --port 5000
+mlflow ui --backend-store-uri file://$(pwd)/artifacts/mlruns
 http://localhost:5000
 
 В src уже используется финальный лучший результат

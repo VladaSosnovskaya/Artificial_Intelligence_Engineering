@@ -5,14 +5,10 @@ import joblib
 from src.constants import CHECKPOINTS_PATH
 
 def prepare_flat_features(dataloader):
-    """
-    Преобразует батчи изображений (B, 1, H, W) в плоские векторы (B, H*W).
-    Используется только для классических ML-моделей.
-    """
     print("Подготовка данных (flattening + scaling)...")
     X, y = [], []
     for images, labels in dataloader:
-        # images: (B, 1, 48, 48) -> flatten to (B, 2304)
+        # images: (Batch, 1, 48, 48) -> flatten to (B, 2304)
         X.append(images.view(images.size(0), -1).numpy())
         y.append(labels.numpy())
     return np.vstack(X), np.concatenate(y)
