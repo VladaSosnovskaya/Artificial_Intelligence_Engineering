@@ -61,4 +61,4 @@ homeworks/HW13/results
 mlruns
 project/data/FER-dataset
 project/artifacts/checkpoints/RandomForest_baseline.pkl
-
+project/src/commands.md

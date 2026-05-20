@@ -6,7 +6,7 @@ _STD  = [0.212]
 def get_train_transform(strategy = "base"):
     base = [transforms.ToTensor(), transforms.Normalize(_MEAN, _STD)]
     
-    if strategy == "base":
+    if strategy == "base" or strategy == "None":
         return transforms.Compose(base)
     elif strategy == "geo":
         return transforms.Compose([

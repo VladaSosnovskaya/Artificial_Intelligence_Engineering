@@ -18,5 +18,7 @@ RUN pip install --no-cache-dir --default-timeout=100 --retries=5 -r requirements
 
 COPY . .
 
+RUN pip install -e .
+
 EXPOSE 8000
 CMD ["uvicorn", "src.service.api:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -3,7 +3,6 @@ import os
 from PIL import Image
 from src.constants import DATA_PATH
 
-
 removed_count = 0
 errors = []
 
@@ -12,7 +11,7 @@ for img_path in Path(DATA_PATH).rglob("*.jpg"):
         img = Image.open(img_path)
         img.load()  # Принудительная проверка целостности
 
-        # Если изображение полностью чёрное или пустое
+        # Если изображение полностью черное или пустое
         if img.getbbox() is None or min(img.getdata()) == max(img.getdata()) == 0:
             os.remove(img_path)
             print(f"Удалено: {str(img_path)}")

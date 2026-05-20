@@ -11,7 +11,7 @@
 
 - **Название проекта:** `Классификация эмоций по изображениям лиц`
 - **Автор:** `Сосновская Владислава Евгеньевна`
-- **Группа:** `БСБО-04-22>`
+- **Группа:** `БСБО-04-22`
 - **Контакт:** `@vladaS36`
 
 - **Краткое описание (2-4 предложения):**  
@@ -50,24 +50,27 @@
 
 ### 3.1. Требования
 
-- Python `>= 3.10` (уточните при необходимости)
-- python3-venv
+- Python `= 3.10.12`
+- python3.10-venv
 
 ### 3.2. Установка окружения
+Проект можно запускать как с помощью виртуального окружения, так и с помощью Docker
 
-Примерный сценарий:
-
+#### Сценарий запуска с использованием venv
 ```bash
 # Перейти в папку проекта
 cd project
 
-# Создать виртуальное окружение (опционально, но рекомендуется)
-python -m venv .venv
+# Создать виртуальное окружение
+# Windows:
+py -3.10 -m venv .venv
+# Linux:
+python3.10 -m venv .venv
 
 # Активировать окружение:
 # Windows:
 .venv\Scripts\activate
-# Linux / macOS:
+# Linux:
 source .venv/bin/activate
 
 # Установить зависимости
@@ -82,41 +85,45 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
+#### Запуск сценария с использование Docker
+```bash
+docker compose up -d --build
+```
+
 ---
 
 ## 4. Как запустить проект
 
 Опишите, как именно воспроизвести основные сценарии использования проекта.
 
-### 4.1. Заполнить .env по шаблону и перенести его в корень проекта (чтобы он лежал на одном уровне с docker-compose)
+### 4.1. Заполнить .env по шаблону configs/.env.example и перенести его в корень проекта (чтобы он лежал на одном уровне с docker-compose)
+Для скачивания датасета с kaggle автоматически, получить ключ на "kaggle" -> "settings"
+![alt text](images_for_readme/image.png)
 
 ### 4.2. Подготовить датасет по инструкции из `data/README.md`
 
 ### 4.3. Запуск обучения модели
 
 ```bash
-cd project
-source .venv/bin/activate
+# Из venv или внутри Docker
 python -m src.train
 ```
-Либо указать свои параметры для обучения:
+По умолчанию используется конфиг из training_best.yaml. Либо можно указать свои параметры для обучения (любые из указанных):
 ```bash
-python -m src.train --config configs/training_best.yaml --model_name CNN_model
-```
+# Из venv или внутри Docker
+python -m src.train --model_name CNN_model --epochs 1 --lr 0.01 --wd 0.001 --patience 5 --batch_size 64 --augmentation None
+``` 
+Выбор типа аугментации из списка: base/None, geo, photo, combined
 
 ### 4.4. Запуск сервиса (API/веб-интерфейс)
 
 ```bash
-cd project
-source .venv/bin/activate
+# Из venv
 uvicorn src.service.api:app
 ```
 
-Либо с помощью докера:
-```bash
-cd project
-docker compose up -d --build
-```
+Либо с помощью докера сервис поднимается автоматически
+
 
 По умолчаанию сервис поднимается на порту 8000. Эндпоинты:
    - /health - Проверка загрузки модели
@@ -164,8 +171,7 @@ curl -s -X POST -F "file=@data/train/angry/Training_3908.jpg" http://localhost:8
 Команда запуска:
 
 ```bash
-cd project
-source .venv/bin/activate
+# внутри venv или внутри Docker
 pytest tests/ -v
 ```
 Ожидание: 8 passed в консоли
@@ -177,10 +183,10 @@ pytest tests/ -v
 > На защите я:
 >
 > 1. Кратко покажу структуру проекта (`notebooks/`, `src/`, `data/`)
-> 2. Запущу сервис через `uvicorn src.service.api:app`, покажу что все тесты проходят
+> 2. Запущу сервис через `uvicorn src.service.api:app` / Docker, покажу что все тесты проходят
 > 3. Покажу, как сервис работает в браузере (`localhost:8000`)
 > 4. Покажу ноутбук с основными экспериментами и сравнение моделей по метрикам (`metrics.csv`)
-> 5. Покажу логи в MLFlow (`mlflow ui --backend-store-uri file://$(pwd)/artifacts/mlruns`, `localhost:5000`)
+> 5. Покажу логи в MLFlow (`mlflow ui --backend-store-uri file://$(pwd)/artifacts/mlruns`, `localhost:5000` в venv/ `localhost:5000` в Docker (сервис запускается по умолчанию))
 
 ---
 

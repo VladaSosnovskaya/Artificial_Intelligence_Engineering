@@ -1,12 +1,22 @@
 services:
+  mlflow:
+    image: python:3.10-slim
+    ports:
+      - "${MLFLOW_PORT}:5000"
+    volumes:
+      - ./artifacts:/app/artifacts
+    working_dir: /app
+    command: >
+      bash -c "pip install mlflow && mlflow ui --host 0.0.0.0 --port 5000 --backend-store-uri file:///app/artifacts/mlruns"
+
   emotion-api-cpu:
     build: 
       context: .
       dockerfile: Dockerfile.cpu
     ports:
-      - "8000:8000"
-    # volumes:
-    #   - ./logs:/app/logs
+      - "${APP_PORT}:8000"
+    volumes:
+      - ./artifacts:/app/artifacts
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
@@ -21,9 +31,9 @@ services:
       context: .
       dockerfile: Dockerfile.gpu
     ports:
-      - "8000:8000"
-    # volumes:
-    #   - ./logs:/app/logs
+      - "${APP_PORT}:8000"
+    volumes:
+      - ./artifacts:/app/artifacts
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]

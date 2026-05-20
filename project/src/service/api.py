@@ -39,12 +39,14 @@ async def metrics_middleware(request: Request, call_next):
     duration = time.time() - start
 
     # обновляем метрики
-    request_times.append(duration)
-    metrics[request.url.path] += 1
-    metrics[f"{request.url.path}_latency"] += duration
+    metric = request.url.path
+    if metric == "/" or metric == "/predict" or metric == "/health" or metric == "/metrics":
+        request_times.append(duration)
+        metrics[request.url.path] += 1
+        metrics[f"{request.url.path}_latency"] += duration
 
-    # логированое 
-    logger.info(f"{request.method} {request.url.path} | {response.status_code} | {duration*1000:.1f}ms")
+        # логированое 
+        logger.info(f"{request.method} {request.url.path} | {response.status_code} | {duration*1000:.1f}ms")
     return response
 
 
@@ -52,7 +54,7 @@ async def metrics_middleware(request: Request, call_next):
 async def health_check():
     if hasattr(engine, "model") and engine.model is not None: # загрузилась ли модель
         return {"status": "healthy", "device": str(engine.device)}
-    return {"status": "degraded", "message": "Model not loaded"}
+    return {"status": "degraded", "message": "Модель не загружена"}
 
 
 @app.post("/predict")
